@@ -1,0 +1,22 @@
+# Please put this file in your working directory (in priority) and/or home directory.
+_workingDir     = .    # string;
+_windowWidth    = 1200 # 1200 # integer; start window width in pixels
+_windowHeight   = 850 # 800 # integer; start window height in pixels
+_pickPtclSize   = 40   # integer;
+_refPtclSize    = 1   # integer;
+_mag            = 1.0  # float;
+_sigmaChoice    = 2    # integer; 1-9 correspond to [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5]
+_invertContrast = 1    # integer; 1: invert; others: don't invert 
+_displayBox     = 1    # integer; 1: display; others: hide
+_displayPsi     = 0    # integer; 1: display; others: hide
+_psiNeedleRatio = 0.0  # float: psiNeedleRatio = distanceOfEndPointFromCenter/pickPtclSize; usually 1.0; set it to 0.0 to hide it
+_defaultPsi     = 0    # float; range: [-180,180]; 0: 3 o'clock
+_defaultFom     = 0    # float;
+_fomGreen       = 5    # float; threshold for coloring particles in green
+_fomYellow      = 4    # float; threshold for coloring particles in yellow
+_fomOrange      = 3    # float; threshold for coloring particles in orange
+_fomMagenta     = 2    # float; threshold for coloring particles in magenta
+_fomRed         = 1    # float; threshold for coloring particles in red
+_fomCyan        = 0    # float; threshold for coloring particles in cyan
+_fomWhite       = -999 # float; threshold for coloring particles in white
+_eraserRadius   = 100  # integer;
