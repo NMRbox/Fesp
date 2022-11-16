@@ -23,13 +23,24 @@ $(IDIR)/bin/Fesp:  dist/Fesp*whl | /usr/software/fesp/lib/python3.8/site-package
 
 # we can't (or don't know how to) override rules because we have two debian/*install files,
 # so copy virtual environment into local directory should dh_install can find it
-Fesp: | $(IDIR)/bin/Fesp 
-	cp -r $(IDIR) Fesp
+fesp: | $(IDIR)/bin/Fesp 
+	cp -r $(IDIR) fesp
 
-Fesp/fest.py: Fesp 
-	ln 
-build: Fesp 
+fesp/FespReadme.txt: | fesp
+	cp src/fesp/FespReadme.txt fesp
+
+fesp/FespSettings.txt: | fesp
+	cp src/fesp/FespSettings.txt fesp
+
+fesp/examples: | fesp
+	cp -r src/fesp/examples fesp
+
+fesp/scripts: | fesp
+	cp -r src/fesp/scripts fesp
+
+build: fesp/FespReadme.txt fesp/FespSettings.txt fesp/examples fesp/scripts
+
 	
 clean:
-	rm -fr $(IDIR)  dist
+	rm -fr $(IDIR)  dist fesp
 	
