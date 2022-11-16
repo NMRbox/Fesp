@@ -9,15 +9,7 @@ Homepage: https://www.nmrbox.org
 Package: nmrbox-nmr-fesp
 Architecture: all
 Depends: ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
-XB-Nmrbox-Software: [software name]
-XB-Nmrbox-Version: [version number]
-XB-Nmrbox-Install-DIR: [install dir]
-XB-Nmrbox-Program_Type: [program type]
-XB-Nmrbox-SVN-Revision: $Rev$
-XB-Nmrbox-SVN-Author: $Author$
-# XB-Nmrbox-Paas: True
-# XB-Nmrbox-Download: True
-# XB-Nmrbox-Python2: <package name>
-# XB-Nmrbox-Python3: <package name> 
+Description: Filament end and single particle picker 
+	Filament end and single particle picker
+XB-Nmrbox-Software: Fesp 
+XB-Nmrbox-Version: 1.0 

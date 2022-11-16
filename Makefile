@@ -26,6 +26,8 @@ $(IDIR)/bin/Fesp:  dist/Fesp*whl | /usr/software/fesp/lib/python3.8/site-package
 Fesp: | $(IDIR)/bin/Fesp 
 	cp -r $(IDIR) Fesp
 
+Fesp/fest.py: Fesp 
+	ln 
 build: Fesp 
 	
 clean:

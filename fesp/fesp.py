@@ -1916,3 +1916,8 @@ class MyApp(wx.App):
 
 app = MyApp(0)
 app.MainLoop()
+
+def main():
+    """Define entry point for setup.cfg""" # gcw
+    pass
+
