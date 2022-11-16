@@ -1,0 +1,6 @@
+#!/bin/bash 
+if [ ! -e $HOME/FespSettings.txt ]; then
+	echo "Creating $HOME/FespSettings.txt"
+	cp /usr/software/fesp/FespSettings.txt $HOME/FespSettings.txt
+fi
+exec /usr/software/fesp/bin/Fesp "$@"
