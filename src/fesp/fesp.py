@@ -6,6 +6,7 @@
 
 from sys import argv
 
+import os
 import re
 import struct
 import wx

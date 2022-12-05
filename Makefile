@@ -2,7 +2,7 @@
 .PHONY: build  clean wheel
 
 #virtual environments are not relocatable, so we must create it where we want it installed
-IDIR := /git/Fesp/venv
+IDIR := /usr/software/fesp
 
 $(IDIR):
 	#create virtual environment
