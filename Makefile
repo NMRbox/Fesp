@@ -2,7 +2,7 @@
 .PHONY: build  clean wheel
 
 #virtual environments are not relocatable, so we must create it where we want it installed
-IDIR := /usr/software/fesp
+IDIR := /git/Fesp/venv
 
 $(IDIR):
 	#create virtual environment
@@ -15,10 +15,10 @@ dist/Fesp*whl: | $(IDIR)
 # make target that can be invoked from command line, for testing
 wheel: dist/Fesp*whl
 
-/usr/software/fesp/lib/python3.8/site-packages/attrdict:
+$(IDIR)/lib/python3.8/site-packages/attrdict:
 	$(IDIR)/bin/pip install -r prerequirements.txt
 
-$(IDIR)/bin/Fesp:  dist/Fesp*whl | /usr/software/fesp/lib/python3.8/site-packages/attrdict
+$(IDIR)/bin/Fesp:  dist/Fesp*whl | $(IDIR)/lib/python3.8/site-packages/attrdict
 	$(IDIR)/bin/pip install --force-reinstall dist/Fesp-*.whl
 
 # we can't (or don't know how to) override rules because we have two debian/*install files,

@@ -1,3 +1,9 @@
+nmrbox-nmr-fesp (1-2) focal; urgency=medium
+
+  * add MrcFileImage plugin
+
+ -- Gerard Weatherby <gweatherby@uchc.edu>  Mon, 05 Dec 2022 14:37:24 -0500
+
 nmrbox-nmr-fesp (1-1) unstable; urgency=medium
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>

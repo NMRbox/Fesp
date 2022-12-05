@@ -6,14 +6,15 @@
 
 from sys import argv
 
-import os
 import re
 import struct
 import wx
 from PIL import Image
+from plugin import MrcImageFile
 from numpy import *
 
-#from PIL import Image
+# from PIL import Image
+MrcImageFile.register()
 
 ######## FespSetttings.txt ######## each variable ends with an S (Setting)
 workingDirS = "."  # string
@@ -665,9 +666,10 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
         self.panelP.Bind(wx.EVT_MOUSEWHEEL, self.OnWheelP)
         self.panelP.Bind(wx.EVT_LEFT_DCLICK, self.OnLeftDclickP)
         self.panelP.Bind(wx.EVT_KEY_UP, self.OnKeyUpP)  # key release ; for navigating the particles (page up and down)
-#gcw        self.GetParent().statusBar.SetStatusText('Happy Particle Picking, %s!' % os.getlogin(), 2)
 
-        ######## PanelT Events ######## Toolbar Panel
+    # gcw        self.GetParent().statusBar.SetStatusText('Happy Particle Picking, %s!' % os.getlogin(), 2)
+
+    ######## PanelT Events ######## Toolbar Panel
 
     def OnMenuFileOpen(self, event):
         if len(self.imageFiles) == 0:
@@ -722,8 +724,8 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
                     imagefile.edtCoordSource = "pick"
                     imagefile.xysmcList = self.LoadCoord(pickcoorf)
                 item = '[%d] %s [%d %s](%d %s)' % (
-                len(self.imageFiles), os.path.basename(path), len(imagefile.xysmcListRef), imagefile.refCoordSource,
-                len(imagefile.xysmcList), imagefile.edtCoordSource)
+                    len(self.imageFiles), os.path.basename(path), len(imagefile.xysmcListRef), imagefile.refCoordSource,
+                    len(imagefile.xysmcList), imagefile.edtCoordSource)
                 self.comboFiles.Append(item)
             except IOError:
                 print('Can NOT open ', path)
@@ -774,7 +776,7 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
                 content = line.split()
                 x = int(float(array_inp[col_no_rln_coordX])) - 1  # usu. col 1
                 y = int(self.sizey_ori - (
-                            float(array_inp[col_no_rln_coordY]) - 1))  # usu. col 2 # the axis needs to be flipped
+                        float(array_inp[col_no_rln_coordY]) - 1))  # usu. col 2 # the axis needs to be flipped
                 s = float(0.0 - float(array_inp[col_no_rln_angPsi]))  # usu. col 4 # The sign needs to be flipped
                 m = float(float(array_inp[col_no_rln_autopickFom]))  # usu. col 5 # #figure of Merit
                 c = int(array_inp[col_no_rln_clsNum])  # usu. col 3 # #class number
@@ -796,7 +798,7 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
             self.imgstat = self.currImageFile.stat_invert
 
         statusinfo = 'Min:%.1f, Max:%.1f, Mean:%.1f, Std:%.1f, Dim:%s' % (
-        self.imgstat[3], self.imgstat[4], self.imgstat[0], self.imgstat[1], self.img_ori.size)
+            self.imgstat[3], self.imgstat[4], self.imgstat[0], self.imgstat[1], self.img_ori.size)
         self.GetParent().statusBar.SetStatusText(statusinfo, 0)
         self.img_contrast = imageFunctions.ContrastSigma(self.img_ori, self.imgstat, self.sigmaLevel)
 
@@ -1047,8 +1049,8 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
                 i = 1
                 for xysmc in imagefile.xysmcList:  # see LoadCoor() for the difference between Spider (Fesp) and Relion in coordinate system
                     filehandle_out_star.write("%13.6f%13.6f%13d%13f%13.6f\n" % (
-                    float(xysmc[0] + 1), float(self.sizey_ori - xysmc[1] + 1), int(xysmc[4]), float(0.0 - xysmc[2]),
-                    float(xysmc[3])))
+                        float(xysmc[0] + 1), float(self.sizey_ori - xysmc[1] + 1), int(xysmc[4]), float(0.0 - xysmc[2]),
+                        float(xysmc[3])))
                     i += 1
                     total += 1
                     filehandle_out_star.close()
@@ -1082,8 +1084,8 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
             i = 1
             for xysmc in self.currImageFile.xysmcList:  # see LoadCoor() for the difference between Spider (Fesp) and Relion in coordinate system
                 filehandle_out_star.write("%13.6f%13.6f%13d%13f%13.6f\n" % (
-                float(xysmc[0] + 1), float(self.sizey_ori - xysmc[1] + 1), int(xysmc[4]), float(0.0 - xysmc[2]),
-                float(xysmc[3])))
+                    float(xysmc[0] + 1), float(self.sizey_ori - xysmc[1] + 1), int(xysmc[4]), float(0.0 - xysmc[2]),
+                    float(xysmc[3])))
                 i += 1
                 total += 1
                 filehandle_out_star.close()
@@ -1306,8 +1308,9 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
                 # Refresh combo_box to show particle number
                 self.comboFiles.Delete(self.currFile)
                 newitem = '[%d] %s [%d %s](%d %s)' % (
-                self.currFile + 1, os.path.basename(self.currImageFile.path), len(self.currImageFile.xysmcListRef),
-                self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList), self.currImageFile.edtCoordSource)
+                    self.currFile + 1, os.path.basename(self.currImageFile.path), len(self.currImageFile.xysmcListRef),
+                    self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList),
+                    self.currImageFile.edtCoordSource)
                 self.comboFiles.Insert(newitem, self.currFile)
                 self.comboFiles.SetSelection(self.currFile)
             return
@@ -1334,9 +1337,10 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
                     # Refresh combo_box to show particle number
                     self.comboFiles.Delete(self.currFile)
                     newitem = '[%d] %s [%d %s](%d %s)' % (
-                    self.currFile + 1, os.path.basename(self.currImageFile.path), len(self.currImageFile.xysmcListRef),
-                    self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList),
-                    self.currImageFile.edtCoordSource)
+                        self.currFile + 1, os.path.basename(self.currImageFile.path),
+                        len(self.currImageFile.xysmcListRef),
+                        self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList),
+                        self.currImageFile.edtCoordSource)
                     self.comboFiles.Insert(newitem, self.currFile)
                     self.comboFiles.SetSelection(self.currFile)
                     self.pickedRectID = int(
@@ -1406,9 +1410,10 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
                     # Refresh combo_box to show particle number
                     self.comboFiles.Delete(self.currFile)
                     newitem = '[%d] %s [%d %s](%d %s)' % (
-                    self.currFile + 1, os.path.basename(self.currImageFile.path), len(self.currImageFile.xysmcListRef),
-                    self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList),
-                    self.currImageFile.edtCoordSource)
+                        self.currFile + 1, os.path.basename(self.currImageFile.path),
+                        len(self.currImageFile.xysmcListRef),
+                        self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList),
+                        self.currImageFile.edtCoordSource)
                     self.comboFiles.Insert(newitem, self.currFile)
                     self.comboFiles.SetSelection(self.currFile)
         else:
@@ -1611,9 +1616,10 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
                         'One particle deleted. Current total %d' % len(self.particleList), 2)
                     self.comboFiles.Delete(self.currFile)  # Refresh combo_box to show particle number
                     newitem = '[%d] %s [%d %s](%d %s)' % (
-                    self.currFile + 1, os.path.basename(self.currImageFile.path), len(self.currImageFile.xysmcListRef),
-                    self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList),
-                    self.currImageFile.edtCoordSource)
+                        self.currFile + 1, os.path.basename(self.currImageFile.path),
+                        len(self.currImageFile.xysmcListRef),
+                        self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList),
+                        self.currImageFile.edtCoordSource)
                     self.comboFiles.Insert(newitem, self.currFile)
                     self.comboFiles.SetSelection(self.currFile)
                 elif event.ControlDown():  # Move this particle to the top of the particle list
@@ -1682,8 +1688,8 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
             # Refresh combo_box to show particle number
             self.comboFiles.Delete(self.currFile)
             newitem = '[%d] %s [%d %s](%d %s)' % (
-            self.currFile + 1, os.path.basename(self.currImageFile.path), len(self.currImageFile.xysmcListRef),
-            self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList), self.currImageFile.edtCoordSource)
+                self.currFile + 1, os.path.basename(self.currImageFile.path), len(self.currImageFile.xysmcListRef),
+                self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList), self.currImageFile.edtCoordSource)
             self.comboFiles.Insert(newitem, self.currFile)
             self.comboFiles.SetSelection(self.currFile)
             if self.pickedRectID > length_self_particleRectList - 2:  # if you deleted the last particle (=length_self_particleRectList - 1)
@@ -1734,9 +1740,10 @@ class FespMainPanel(wx.Panel):  ######## Class 4: Fesp Main Panel ######## MenuB
                     self.GetParent().statusBar.SetStatusText('%d particles deleted. Current total %d' % (rmtotal, i), 2)
                     self.comboFiles.Delete(self.currFile)  # Refresh combo_box to show particle number
                     newitem = '[%d] %s [%d %s](%d %s)' % (
-                    self.currFile + 1, os.path.basename(self.currImageFile.path), len(self.currImageFile.xysmcListRef),
-                    self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList),
-                    self.currImageFile.edtCoordSource)
+                        self.currFile + 1, os.path.basename(self.currImageFile.path),
+                        len(self.currImageFile.xysmcListRef),
+                        self.currImageFile.refCoordSource, len(self.currImageFile.xysmcList),
+                        self.currImageFile.edtCoordSource)
                     self.comboFiles.Insert(newitem, self.currFile)
                     self.comboFiles.SetSelection(self.currFile)
                 self.panelP.Refresh()
@@ -1917,7 +1924,7 @@ class MyApp(wx.App):
 app = MyApp(0)
 app.MainLoop()
 
-def main():
-    """Define entry point for setup.cfg""" # gcw
-    pass
 
+def main():
+    """Define entry point for setup.cfg"""  # gcw
+    pass
